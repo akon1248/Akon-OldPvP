@@ -1,0 +1,35 @@
+Melee:
+  disable-attack-speed: true
+  old-axe-damage: true
+  sword-blocking: true
+  shield-damage-reducation: 0.5
+  disable-offhand: true
+  disable-sweep-attack: true
+  disable-damage-indicator-particle: true
+  AttackSounds:
+    crit: false
+    knockback: false
+    nodamage: false
+    strong: false
+    weak: false
+Projectiles:
+  egg-knockback: true
+  ender-pearl-knockback: true
+  fishing-rod-knockback: true
+  snowball-knockback: true
+  disable-ender-pearl-cooldown: true
+GoldenApple:
+  old-god-apple-effects: true
+  god-apple-recipe: true
+PotionEffects:
+  old-strength: true
+  old-weakness: true
+Enchantments:
+  old-sharpness: true
+Utilities:
+  disable-collision: true
+  old-brewing-stand: true
+  no-lapis-enchantments: true
+  custom-player-damage-sound:
+    enabled: false
+    sound: ENTITY_BLAZE_HURT
