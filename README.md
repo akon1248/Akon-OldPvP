@@ -3,7 +3,7 @@
 
 コンフィグ↓
 
-Melee:
+Melee:  
 &nbsp;&nbsp;disable-attack-speed: true #攻撃速度を無効にするかどうか  
 &nbsp;&nbsp;old-axe-damage: true #斧のダメージを1.8以前と同じにするかどうか  
 &nbsp;&nbsp;sword-blocking: true #剣で防御可能にするかどうか  
