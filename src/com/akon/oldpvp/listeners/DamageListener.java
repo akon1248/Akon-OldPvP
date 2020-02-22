@@ -1,8 +1,11 @@
 package com.akon.oldpvp.listeners;
 
+import com.akon.oldpvp.OldPvP;
 import com.akon.oldpvp.utils.ConfigManager;
 import com.akon.oldpvp.utils.ReflectionUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.EnderPearl;
@@ -26,6 +29,9 @@ public class DamageListener implements Listener {
             double finalDamage = e.getFinalDamage()-e.getDamage(EntityDamageEvent.DamageModifier.BLOCKING);
             e.setDamage(EntityDamageEvent.DamageModifier.BLOCKING, finalDamage >= damageReducation ? -damageReducation : -finalDamage);
             e.getEntity().playEffect(EntityEffect.HURT);
+            if (ConfigManager.getBoolean("Melee.disable-shield-cooldown")) {
+                Bukkit.getScheduler().runTask(OldPvP.getInstance(), () -> ((Player)e.getEntity()).setCooldown(Material.SHIELD, 0));
+            }
         }
         if (e.getEntity() instanceof Player && ((e.getDamager() instanceof Egg && ConfigManager.getBoolean("Projectiles.egg-knockback")) || (e.getDamager() instanceof EnderPearl && ConfigManager.getBoolean("Projectiles.ender-pearl-knockback")) || (e.getDamager() instanceof Snowball && ConfigManager.getBoolean("Projectiles.snowball-knockback")))) {
             e.setDamage(0.0000001);

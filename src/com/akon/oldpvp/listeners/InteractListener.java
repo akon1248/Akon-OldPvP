@@ -2,6 +2,7 @@ package com.akon.oldpvp.listeners;
 
 import com.akon.oldpvp.OldPvP;
 import com.akon.oldpvp.utils.ConfigManager;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
@@ -18,22 +19,15 @@ import java.util.HashMap;
 
 public class InteractListener implements Listener {
 
-    public static final HashMap<Player, BlockingRunnable> BLOCKING_RUNNABLES = new HashMap<>();
+    public static final HashMap<Player, BlockingRunnable> BLOCKING_RUNNABLE = new HashMap<>();
 
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
         if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-            if (ConfigManager.getBoolean("Melee.sword-blocking") && BLOCKING_RUNNABLES.get(e.getPlayer()) == null && isSword(e.getItem())) {
+            if (ConfigManager.getBoolean("Melee.sword-blocking") && BLOCKING_RUNNABLE.get(e.getPlayer()) == null && isSword(e.getItem())) {
                 new BlockingRunnable(e.getPlayer()).runTaskTimer(OldPvP.getInstance(), 5, 1);
             } else if (ConfigManager.getBoolean("Projectiles.disable-ender-pearl-cooldown") && e.getItem() != null && e.getItem().getType() == Material.ENDER_PEARL) {
-                new BukkitRunnable() {
-
-                    @Override
-                    public void run() {
-                        e.getPlayer().setCooldown(Material.ENDER_PEARL, 1);
-                    }
-
-                }.runTaskLater(OldPvP.getInstance(), 1);
+                Bukkit.getScheduler().runTask(OldPvP.getInstance(), () -> e.getPlayer().setCooldown(Material.ENDER_PEARL, 0));
             }
         }
     }
@@ -41,17 +35,10 @@ public class InteractListener implements Listener {
     @EventHandler
     public void onClickEntity(PlayerInteractEntityEvent e) {
         if (isSword(e.getPlayer().getEquipment().getItemInMainHand())) {
-            if (ConfigManager.getBoolean("Melee.sword-blocking") && BLOCKING_RUNNABLES.get(e.getPlayer()) == null && isSword(e.getPlayer().getEquipment().getItemInMainHand())) {
+            if (ConfigManager.getBoolean("Melee.sword-blocking") && BLOCKING_RUNNABLE.get(e.getPlayer()) == null && isSword(e.getPlayer().getEquipment().getItemInMainHand())) {
                 new BlockingRunnable(e.getPlayer()).runTaskTimer(OldPvP.getInstance(), 5, 1);
             } else if (ConfigManager.getBoolean("Projectiles.disable-ender-pearl-cooldown") && e.getPlayer().getEquipment().getItemInMainHand() != null && e.getPlayer().getEquipment().getItemInMainHand().getType() == Material.ENDER_PEARL) {
-                new BukkitRunnable() {
-
-                    @Override
-                    public void run() {
-                        e.getPlayer().setCooldown(Material.ENDER_PEARL, 1);
-                    }
-
-                }.runTaskLater(OldPvP.getInstance(), 1);
+                Bukkit.getScheduler().runTask(OldPvP.getInstance(), () -> e.getPlayer().setCooldown(Material.ENDER_PEARL, 0));
             }
         }
     }
@@ -68,7 +55,7 @@ public class InteractListener implements Listener {
         public BlockingRunnable(Player p) {
             this.p = p;
             this.offhandItem = p.getEquipment().getItemInOffHand();
-            BLOCKING_RUNNABLES.put(p, this);
+            BLOCKING_RUNNABLE.put(p, this);
             ItemStack shield = new ItemStack(Material.SHIELD);
             ItemMeta meta = shield.getItemMeta();
             meta.setUnbreakable(true);
@@ -88,7 +75,7 @@ public class InteractListener implements Listener {
         public void cancel() {
             super.cancel();
             p.getEquipment().setItemInOffHand(offhandItem);
-            BLOCKING_RUNNABLES.remove(this.p);
+            BLOCKING_RUNNABLE.remove(this.p);
         }
 
     }

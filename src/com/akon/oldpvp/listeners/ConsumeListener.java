@@ -22,7 +22,7 @@ public class ConsumeListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onConsume(PlayerItemConsumeEvent e) {
         if (ConfigManager.getBoolean("GoldenApple.old-god-apple-effects") && e.getItem().getType() == Material.GOLDEN_APPLE && e.getItem().getDurability() > 0 && !e.isCancelled()) {
-            e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, new Random().nextFloat()*0.1F+0.9F);
+            e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, new Random().nextFloat()*0.1F+0.9F);
             e.getPlayer().setFoodLevel(e.getPlayer().getFoodLevel()+4);
             e.getPlayer().setSaturation(e.getPlayer().getFoodLevel()-e.getPlayer().getSaturation() <= 9.6 ? e.getPlayer().getFoodLevel() : e.getPlayer().getSaturation()+9.6F);
             addPotionEffect(e.getPlayer(), new PotionEffect(PotionEffectType.REGENERATION, 600, 4, false));
@@ -37,7 +37,7 @@ public class ConsumeListener implements Listener {
             e.setCancelled(true);
             try {
                 ReflectionUtil.invokeMethod(ReflectionUtil.getHandle(e.getPlayer()), "cN");
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
+            } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
             }
         }

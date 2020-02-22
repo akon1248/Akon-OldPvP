@@ -3,9 +3,13 @@ Melee:
   old-axe-damage: true
   sword-blocking: true
   shield-damage-reducation: 0.5
+  disable-shield-cooldown: true
+  disable-shield-block-sound: true
+  disable-shield-break-sound: true
   disable-offhand: true
   disable-sweep-attack: true
   disable-damage-indicator-particle: true
+  old-hit-animation: true
   AttackSounds:
     crit: false
     knockback: false

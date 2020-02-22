@@ -32,8 +32,8 @@ public class JoinQuitListener implements Listener {
         if (ConfigManager.getBoolean("Melee.disable-attack-speed")) {
             e.getPlayer().getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
         }
-        if (InteractListener.BLOCKING_RUNNABLES.get(e.getPlayer()) != null) {
-            InteractListener.BLOCKING_RUNNABLES.get(e.getPlayer()).cancel();
+        if (InteractListener.BLOCKING_RUNNABLE.get(e.getPlayer()) != null) {
+            InteractListener.BLOCKING_RUNNABLE.get(e.getPlayer()).cancel();
         }
     }
 

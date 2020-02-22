@@ -1,9 +1,7 @@
 package com.akon.oldpvp;
 
 import com.akon.oldpvp.listeners.*;
-import com.akon.oldpvp.listeners.packet.EntityStatusListener;
-import com.akon.oldpvp.listeners.packet.ParticleListener;
-import com.akon.oldpvp.listeners.packet.SoundListener;
+import com.akon.oldpvp.listeners.packet.*;
 import com.akon.oldpvp.utils.ConfigManager;
 import com.akon.oldpvp.utils.ReflectionUtil;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -32,9 +30,9 @@ public class OldPvP extends JavaPlugin {
         instance = this;
         this.saveDefaultConfig();
         this.reloadConfig();
-        new OldPvPRunnable().runTaskTimer(this, 0, 1);
         this.getCommand("oldpvp").setExecutor(new OldPvPCommand());
         this.getCommand("oldpvp").setTabCompleter(new OldPvPCommand());
+        new OldPvPRunnable().runTaskTimer(this, 0, 1);
         Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
         Bukkit.getPluginManager().registerEvents(new ConsumeListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
@@ -47,6 +45,7 @@ public class OldPvP extends JavaPlugin {
         ProtocolLibrary.getProtocolManager().addPacketListener(new EntityStatusListener(this, ListenerPriority.NORMAL));
         ProtocolLibrary.getProtocolManager().addPacketListener(new ParticleListener(this, ListenerPriority.NORMAL));
         ProtocolLibrary.getProtocolManager().addPacketListener(new SoundListener(this, ListenerPriority.NORMAL));
+        ProtocolLibrary.getProtocolManager().addPacketListener(new WindowItemsListener(this, ListenerPriority.NORMAL));
     }
 
     @Override
