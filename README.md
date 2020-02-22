@@ -1,6 +1,8 @@
 # Akon-OldPvP
  よりよいOldPvP
 
+前提プラグイン: ProtocolLib
+
 コンフィグ↓
 
 ```yml
