@@ -1,7 +1,10 @@
 package com.akon.oldpvp;
 
 import com.akon.oldpvp.listeners.*;
-import com.akon.oldpvp.listeners.packet.*;
+import com.akon.oldpvp.listeners.packet.EntityStatusListener;
+import com.akon.oldpvp.listeners.packet.ParticleListener;
+import com.akon.oldpvp.listeners.packet.SoundListener;
+import com.akon.oldpvp.listeners.packet.WindowItemsListener;
 import com.akon.oldpvp.utils.ConfigManager;
 import com.akon.oldpvp.utils.ReflectionUtil;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -17,9 +20,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class OldPvP extends JavaPlugin {
 
@@ -36,6 +37,7 @@ public class OldPvP extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
         Bukkit.getPluginManager().registerEvents(new ConsumeListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
+        Bukkit.getPluginManager().registerEvents(new EnchantListener(), this);
         Bukkit.getPluginManager().registerEvents(new FishingListener(), this);
         Bukkit.getPluginManager().registerEvents(new InteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
@@ -117,13 +119,35 @@ public class OldPvP extends JavaPlugin {
             recipeBackup.forEach(Bukkit::addRecipe);
         }
         try {
+            Object itemRegistry = ReflectionUtil.getStaticField(ReflectionUtil.getNMSClass("Item"), "REGISTRY");
+            Object woodenAxe = ReflectionUtil.invokeMethod(itemRegistry, "get", new Class[]{Object.class}, new Object[]{ReflectionUtil.invokeConstructor(ReflectionUtil.getNMSClass("MinecraftKey"), new Class[]{String.class}, new Object[]{"wooden_axe"})});
+            Object stoneAxe = ReflectionUtil.invokeMethod(itemRegistry, "get", new Class[]{Object.class}, new Object[]{ReflectionUtil.invokeConstructor(ReflectionUtil.getNMSClass("MinecraftKey"), new Class[]{String.class}, new Object[]{"stone_axe"})});
+            Object ironAxe = ReflectionUtil.invokeMethod(itemRegistry, "get", new Class[]{Object.class}, new Object[]{ReflectionUtil.invokeConstructor(ReflectionUtil.getNMSClass("MinecraftKey"), new Class[]{String.class}, new Object[]{"iron_axe"})});
+            Object diamondAxe = ReflectionUtil.invokeMethod(itemRegistry, "get", new Class[]{Object.class}, new Object[]{ReflectionUtil.invokeConstructor(ReflectionUtil.getNMSClass("MinecraftKey"), new Class[]{String.class}, new Object[]{"diamond_axe"})});
+            Object goldenAxe = ReflectionUtil.invokeMethod(itemRegistry, "get", new Class[]{Object.class}, new Object[]{ReflectionUtil.invokeConstructor(ReflectionUtil.getNMSClass("MinecraftKey"), new Class[]{String.class}, new Object[]{"golden_axe"})});
             Object effectRegistry = ReflectionUtil.getStaticField(ReflectionUtil.getNMSClass("MobEffectList"), "REGISTRY");
             Object strength = ReflectionUtil.invokeMethod(effectRegistry, "get", new Class[]{Object.class}, new Object[]{ReflectionUtil.invokeConstructor(ReflectionUtil.getNMSClass("MinecraftKey"), new Class[]{String.class}, new Object[]{"strength"})});
+            Object strengthAttributeModifier = ((Map<Object, Object>)ReflectionUtil.getField(ReflectionUtil.getNMSClass("MobEffectList"), strength, "a")).get(ReflectionUtil.getStaticField(ReflectionUtil.getNMSClass("GenericAttributes"), "ATTACK_DAMAGE"));
             Object weakness = ReflectionUtil.invokeMethod(effectRegistry, "get", new Class[]{Object.class}, new Object[]{ReflectionUtil.invokeConstructor(ReflectionUtil.getNMSClass("MinecraftKey"), new Class[]{String.class}, new Object[]{"weakness"})});
+            if (ConfigManager.getBoolean("Melee.old-axe-damage")) {
+                ReflectionUtil.setField(woodenAxe, "b", 2.0F);
+                ReflectionUtil.setField(stoneAxe, "b", 3.0F);
+                ReflectionUtil.setField(ironAxe, "b", 4.0F);
+                ReflectionUtil.setField(diamondAxe, "b", 5.0F);
+                ReflectionUtil.setField(goldenAxe, "b", 2.0F);
+            } else {
+                ReflectionUtil.setField(woodenAxe, "b", 6.0F);
+                ReflectionUtil.setField(stoneAxe, "b", 8.0F);
+                ReflectionUtil.setField(ironAxe, "b", 8.0F);
+                ReflectionUtil.setField(diamondAxe, "b", 8.0F);
+                ReflectionUtil.setField(goldenAxe, "b", 6.0F);
+            }
             if (ConfigManager.getBoolean("PotionEffects.old-strength")) {
-                ReflectionUtil.setField(strength, "a", 0.0);
+                ReflectionUtil.setField(strength, "a", 1.3);
+                ReflectionUtil.setField(strengthAttributeModifier, "b", 2);
             } else {
                 ReflectionUtil.setField(strength, "a", 3.0);
+                ReflectionUtil.setField(strengthAttributeModifier, "b", 0);
             }
             if (ConfigManager.getBoolean("PotionEffects.old-weakness")) {
                 ReflectionUtil.setField(weakness, "a", -0.5);

@@ -33,7 +33,7 @@ public class DamageListener implements Listener {
                 Bukkit.getScheduler().runTask(OldPvP.getInstance(), () -> ((Player)e.getEntity()).setCooldown(Material.SHIELD, 0));
             }
         }
-        if (e.getEntity() instanceof Player && ((e.getDamager() instanceof Egg && ConfigManager.getBoolean("Projectiles.egg-knockback")) || (e.getDamager() instanceof EnderPearl && ConfigManager.getBoolean("Projectiles.ender-pearl-knockback")) || (e.getDamager() instanceof Snowball && ConfigManager.getBoolean("Projectiles.snowball-knockback")))) {
+        if (e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && ((e.getDamager() instanceof Egg && ConfigManager.getBoolean("Projectiles.egg-knockback")) || (e.getDamager() instanceof EnderPearl && ConfigManager.getBoolean("Projectiles.ender-pearl-knockback")) || (e.getDamager() instanceof Snowball && ConfigManager.getBoolean("Projectiles.snowball-knockback")))) {
             e.setDamage(0.0000001);
         } else if (ConfigManager.getBoolean("Melee.disable-sweep-attack") && e.getDamager() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
             e.setCancelled(true);

@@ -7,8 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static com.akon.oldpvp.utils.ReflectionUtil.*;
 
 public class ProjectileHitListener implements Listener {
@@ -19,7 +17,7 @@ public class ProjectileHitListener implements Listener {
             try {
                 Object damageSource = invokeStaticMethod(getNMSClass("DamageSource"), "projectile", new Class[] {getNMSClass("Entity"), getNMSClass("Entity")}, new Object[] {getHandle(e.getEntity()), e.getEntity().getShooter() == null ? null : getHandle(e.getEntity().getShooter())});
                 invokeMethod(getHandle(e.getHitEntity()), "damageEntity", new Class[] {getNMSClass("DamageSource"), float.class}, new Object[] {damageSource, 0.0000001F});
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | ClassNotFoundException ex) {
+            } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
             }
 

@@ -48,6 +48,12 @@ public class ReflectionUtil {
         return field.get(obj);
     }
 
+    public static Object getField(Class clazz, Object obj, String fieldName) throws NoSuchFieldException, IllegalAccessException {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        return field.get(obj);
+    }
+
     public static Object getStaticField(Class clazz, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
@@ -77,6 +83,12 @@ public class ReflectionUtil {
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
         modifiersField.setInt(field, field.getModifiers() & -17);
+        field.set(obj, value);
+    }
+
+    public static void setField(Class clazz, Object obj, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
         field.set(obj, value);
     }
 
@@ -112,6 +124,16 @@ public class ReflectionUtil {
                 }
             }
         }
+        method.setAccessible(true);
+        return method.invoke(obj, params);
+    }
+
+    public static Object invokeMethod(Class clazz, Object obj, String methodName) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        return invokeMethod(clazz, obj, methodName, new Class[0], new Object[0]);
+    }
+
+    public static Object invokeMethod(Class clazz, Object obj, String methodName, Class[] paramTypes, Object[] params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = clazz.getDeclaredMethod(methodName, paramTypes);
         method.setAccessible(true);
         return method.invoke(obj, params);
     }
