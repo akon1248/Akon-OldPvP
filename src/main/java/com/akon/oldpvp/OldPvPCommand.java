@@ -1,5 +1,6 @@
 package com.akon.oldpvp;
 
+import com.google.common.collect.Lists;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +27,7 @@ public class OldPvPCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> result = Lists.newArrayList();
         if (command.getName().equals("oldpvp") && args.length == 1 && "reload".startsWith(args[0].toLowerCase())) {
             result.add("reload");
         }

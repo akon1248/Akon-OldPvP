@@ -1,4 +1,4 @@
-package com.akon.oldpvp.listeners;
+package com.akon.oldpvp.listener;
 
 import com.akon.oldpvp.utils.ConfigManager;
 import org.bukkit.event.EventHandler;
@@ -9,7 +9,7 @@ public class SwapHandItemsListener implements Listener {
 
     @EventHandler
     public void onSwapHandItems(PlayerSwapHandItemsEvent e) {
-        if (ConfigManager.getBoolean("Melee.disable-offhand")) {
+        if (ConfigManager.getBoolean("Combat.disable-offhand")) {
             e.setCancelled(true);
         }
     }

@@ -1,18 +1,17 @@
-package com.akon.oldpvp.listeners.packet;
+package com.akon.oldpvp.listener.packet;
 
+import com.akon.oldpvp.OldPvP;
 import com.akon.oldpvp.utils.ConfigManager;
 import com.akon.oldpvp.utils.ReflectionUtil;
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import org.bukkit.plugin.Plugin;
 
 public class ParticleListener extends PacketAdapter {
 
-    public ParticleListener(Plugin plugin, ListenerPriority listenerPriority) {
-        super(plugin, listenerPriority, PacketType.Play.Server.WORLD_PARTICLES);
+    public ParticleListener() {
+        super(OldPvP.getInstance(), PacketType.Play.Server.WORLD_PARTICLES);
     }
 
     @Override
@@ -25,9 +24,9 @@ public class ParticleListener extends PacketAdapter {
                     break;
                 }
             }
-            if (flag && ConfigManager.getBoolean("Melee.disable-sweep-attack") && e.getPacket().getParticles().read(0) == EnumWrappers.Particle.SWEEP_ATTACK) {
+            if (flag && ConfigManager.getBoolean("Combat.disable-sweep-attack") && e.getPacket().getParticles().read(0) == EnumWrappers.Particle.SWEEP_ATTACK) {
                 e.setCancelled(true);
-            } else if (flag && ConfigManager.getBoolean("Melee.disable-damage-indicator-particle") && e.getPacket().getParticles().read(0) == EnumWrappers.Particle.DAMAGE_INDICATOR) {
+            } else if (flag && ConfigManager.getBoolean("Combat.disable-damage-indicator-particle") && e.getPacket().getParticles().read(0) == EnumWrappers.Particle.DAMAGE_INDICATOR) {
                 e.setCancelled(true);
             }
         }

@@ -139,7 +139,7 @@ public class ReflectionUtil {
     }
 
     public static Object invokeStaticMethod(Class clazz, String methodName) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        return invokeMethod(clazz, methodName, new Class[0], new Object[0]);
+        return invokeStaticMethod(clazz, methodName, new Class[0], new Object[0]);
     }
 
     public static Object invokeStaticMethod(Class clazz, String methodName, Class[] paramTypes, Object[] params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

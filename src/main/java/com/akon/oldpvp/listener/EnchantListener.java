@@ -1,4 +1,4 @@
-package com.akon.oldpvp.listeners;
+package com.akon.oldpvp.listener;
 
 import com.akon.oldpvp.OldPvP;
 import com.akon.oldpvp.utils.ConfigManager;
@@ -16,9 +16,9 @@ public class EnchantListener implements Listener {
 
     @EventHandler
     public void onPrepareEnchant(PrepareItemEnchantEvent e) {
-        if (ConfigManager.getBoolean("Enchantments.old-enchanting-table")) {
+        if (ConfigManager.getBoolean("Enchantment.old-enchanting-table")) {
             try {
-                ReflectionUtil.invokeMethod(ReflectionUtil.getHandle(e.getView().getPlayer()), "enchantDone", new Class[]{ReflectionUtil.getNMSClass("ItemStack"), int.class}, new Object[]{null, 0});
+                ReflectionUtil.invokeMethod(ReflectionUtil.getNMSClass("EntityHuman"), ReflectionUtil.getHandle(e.getView().getPlayer()), "enchantDone", new Class[]{ReflectionUtil.getNMSClass("ItemStack"), int.class}, new Object[]{null, 0});
                 ReflectionUtil.setField(ReflectionUtil.getField(ReflectionUtil.getHandle(e.getView().getPlayer()), "activeContainer"), "f", ReflectionUtil.invokeMethod(ReflectionUtil.getHandle(e.getView().getPlayer()), "dg"));
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
@@ -28,7 +28,7 @@ public class EnchantListener implements Listener {
 
     @EventHandler
     public void onEnchant(EnchantItemEvent e) {
-        if (ConfigManager.getBoolean("Enchantments.no-lapis-enchantments")) {
+        if (ConfigManager.getBoolean("Enchantment.no-lapis-enchantments")) {
             Bukkit.getScheduler().runTask(OldPvP.getInstance(), () -> ((EnchantingInventory)e.getInventory()).setSecondary(new ItemStack(Material.INK_SACK, 64, (short)4)));
         }
     }

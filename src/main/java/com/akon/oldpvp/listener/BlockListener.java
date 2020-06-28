@@ -1,4 +1,4 @@
-package com.akon.oldpvp.listeners;
+package com.akon.oldpvp.listener;
 
 import com.akon.oldpvp.utils.ConfigManager;
 import org.bukkit.Material;

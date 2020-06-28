@@ -13,7 +13,7 @@ public class ConfigManager {
     }
 
     public static boolean getBoolean(String path) {
-        return OldPvP.getInstance().getConfig().getBoolean(path);
+        return OldPvP.getInstance().getConfig().getBoolean(path, false);
     }
 
     public static boolean getBoolean(String path, boolean def) {

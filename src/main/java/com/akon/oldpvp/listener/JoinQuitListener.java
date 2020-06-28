@@ -1,4 +1,4 @@
-package com.akon.oldpvp.listeners;
+package com.akon.oldpvp.listener;
 
 import com.akon.oldpvp.utils.ConfigManager;
 import org.bukkit.attribute.Attribute;
@@ -13,7 +13,7 @@ public class JoinQuitListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoin(PlayerJoinEvent e) {
-        if (ConfigManager.getBoolean("Melee.disable-attack-speed")) {
+        if (ConfigManager.getBoolean("Combat.disable-attack-speed")) {
             e.getPlayer().getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(30);
         }
         if (ConfigManager.getBoolean("Utilities.disable-collision")) {
@@ -29,11 +29,11 @@ public class JoinQuitListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        if (ConfigManager.getBoolean("Melee.disable-attack-speed")) {
+        if (ConfigManager.getBoolean("Combat.disable-attack-speed")) {
             e.getPlayer().getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
         }
-        if (InteractListener.BLOCKING_RUNNABLE.get(e.getPlayer()) != null) {
-            InteractListener.BLOCKING_RUNNABLE.get(e.getPlayer()).cancel();
+        if (InteractListener.BLOCKING_TASK.get(e.getPlayer()) != null) {
+            InteractListener.BLOCKING_TASK.get(e.getPlayer()).cancel();
         }
     }
 

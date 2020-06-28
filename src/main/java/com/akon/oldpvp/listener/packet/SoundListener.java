@@ -1,18 +1,17 @@
-package com.akon.oldpvp.listeners.packet;
+package com.akon.oldpvp.listener.packet;
 
+import com.akon.oldpvp.OldPvP;
 import com.akon.oldpvp.utils.ConfigManager;
 import com.akon.oldpvp.utils.ReflectionUtil;
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import org.bukkit.Sound;
-import org.bukkit.plugin.Plugin;
 
 public class SoundListener extends PacketAdapter {
 
-    public SoundListener(Plugin plugin, ListenerPriority listenerPriority) {
-        super(plugin, listenerPriority, PacketType.Play.Server.NAMED_SOUND_EFFECT);
+    public SoundListener() {
+        super(OldPvP.getInstance(), PacketType.Play.Server.NAMED_SOUND_EFFECT);
     }
 
     @Override
@@ -37,17 +36,17 @@ public class SoundListener extends PacketAdapter {
                 if (sound != null) {
                     e.getPacket().getSoundEffects().write(0, sound);
                 }
-            } else if (flag2 && ConfigManager.getBoolean("Melee.disable-sweep-attack") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_SWEEP) {
+            } else if (flag2 && ConfigManager.getBoolean("Combat.disable-sweep-attack") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_SWEEP) {
                 e.setCancelled(true);
-            } else if (flag2 && !ConfigManager.getBoolean("Melee.AttackSounds.crit") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_CRIT) {
+            } else if (flag2 && !ConfigManager.getBoolean("Combat.AttackSounds.crit") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_CRIT) {
                 e.setCancelled(true);
-            } else if (flag2 && !ConfigManager.getBoolean("Melee.AttackSounds.knockback") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK) {
+            } else if (flag2 && !ConfigManager.getBoolean("Combat.AttackSounds.knockback") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK) {
                 e.setCancelled(true);
-            } else if (flag2 && !ConfigManager.getBoolean("Melee.AttackSounds.nodamage") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_NODAMAGE) {
+            } else if (flag2 && !ConfigManager.getBoolean("Combat.AttackSounds.nodamage") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_NODAMAGE) {
                 e.setCancelled(true);
-            } else if (flag2 && !ConfigManager.getBoolean("Melee.AttackSounds.strong") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_STRONG) {
+            } else if (flag2 && !ConfigManager.getBoolean("Combat.AttackSounds.strong") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_STRONG) {
                 e.setCancelled(true);
-            } else if (flag2 && !ConfigManager.getBoolean("Melee.AttackSounds.weak") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_WEAK) {
+            } else if (flag2 && !ConfigManager.getBoolean("Combat.AttackSounds.weak") && e.getPacket().getSoundEffects().read(0) == Sound.ENTITY_PLAYER_ATTACK_WEAK) {
                 e.setCancelled(true);
             }
         }

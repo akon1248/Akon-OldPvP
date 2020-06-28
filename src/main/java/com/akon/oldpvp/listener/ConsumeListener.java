@@ -1,4 +1,4 @@
-package com.akon.oldpvp.listeners;
+package com.akon.oldpvp.listener;
 
 import com.akon.oldpvp.utils.ConfigManager;
 import com.akon.oldpvp.utils.ReflectionUtil;
@@ -10,11 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class ConsumeListener implements Listener {

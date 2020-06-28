@@ -15,7 +15,7 @@ public class OldPvPRunnable extends BukkitRunnable {
         for (World world: Bukkit.getWorlds()) {
             for (Player player: world.getEntitiesByClass(Player.class)) {
                 try {
-                    if (ConfigManager.getBoolean("Melee.disable-attack-speed") && (Integer)getField(getHandle(player), "aE") < 0) {
+                    if (ConfigManager.getBoolean("Combat.disable-attack-speed") && (Integer)getField(getHandle(player), "aE") < 0) {
                         setField(getHandle(player), "aE", 1);
                     }
                 } catch (ReflectiveOperationException ex) {

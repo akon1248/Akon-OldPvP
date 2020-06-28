@@ -1,24 +1,23 @@
-package com.akon.oldpvp.listeners.packet;
+package com.akon.oldpvp.listener.packet;
 
+import com.akon.oldpvp.OldPvP;
 import com.akon.oldpvp.utils.ConfigManager;
 import com.akon.oldpvp.utils.ReflectionUtil;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class EntityStatusListener extends PacketAdapter {
 
-    public EntityStatusListener(Plugin plugin, ListenerPriority listenerPriority) {
-        super(plugin, listenerPriority, PacketType.Play.Server.ENTITY_STATUS);
+    public EntityStatusListener() {
+        super(OldPvP.getInstance(), PacketType.Play.Server.ENTITY_STATUS);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class EntityStatusListener extends PacketAdapter {
                     e.getPlayer().playSound(e.getPlayer().getLocation(), sound, SoundCategory.PLAYERS, 1, (random.nextFloat()-random.nextFloat())*0.2F+1);
                 }
             }
-            if (flag && e.getPacket().getEntityModifier(e.getPlayer().getWorld()).read(0) == e.getPlayer() && ((ConfigManager.getBoolean("Melee.disable-shield-block-sound") && e.getPacket().getBytes().read(0) == 29) || (ConfigManager.getBoolean("Melee.disable-shield-break-sound") && e.getPacket().getBytes().read(0) == 30))) {
+            if (flag && e.getPacket().getEntityModifier(e.getPlayer().getWorld()).read(0) == e.getPlayer() && ((ConfigManager.getBoolean("Combat.disable-shield-block-sound") && e.getPacket().getBytes().read(0) == 29) || (ConfigManager.getBoolean("Combat.disable-shield-break-sound") && e.getPacket().getBytes().read(0) == 30))) {
                 e.setCancelled(true);
             }
         }
