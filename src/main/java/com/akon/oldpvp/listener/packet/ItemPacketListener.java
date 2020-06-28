@@ -47,7 +47,7 @@ public class ItemPacketListener extends PacketAdapter {
 			e.getPacket().getItemModifier().write(0, item);
 		} else if (e.getPacketType() == PacketType.Play.Server.WINDOW_ITEMS) {
 			List<ItemStack> itemList = e.getPacket().getItemListModifier().read(0);
-			if (e.getPacketType() == PacketType.Play.Server.SET_SLOT) {
+			if (ConfigManager.getBoolean("Item.old-item-info")) {
 				itemList = itemList.stream().map(ItemPacketListener::oldItemInfo).collect(Collectors.toList());
 			}
 			if (ConfigManager.getBoolean("Potion.old-potion-duration")) {

@@ -6,7 +6,7 @@
 
     <groupId>com.akon.oldpvp</groupId>
     <artifactId>AkonOldPvP</artifactId>
-    <version>1.4</version>
+    <version>1.4.1</version>
     <packaging>jar</packaging>
 
     <name>AkonOldPvP</name>

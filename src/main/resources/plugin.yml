@@ -1,6 +1,7 @@
 name: 'AkonOldPvP'
 main: com.akon.oldpvp.OldPvP
-version: 1.4
+version: ${project.version}
+api-version: 1.12.2
 author: akon
 depend: [ProtocolLib]
 
