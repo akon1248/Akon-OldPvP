@@ -19,12 +19,12 @@ public class DamageListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDamage(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamage(EntityDamageEvent.DamageModifier.BLOCKING) < 0) {
-            double damageReducation = e.getDamage()*ConfigManager.getNumber("Combat.shield-damage-reducation").doubleValue();
-            if (damageReducation <= 0) {
-                damageReducation = 0;
+            double damageReduction = e.getDamage()*ConfigManager.getNumber("Combat.shield-damage-reducation").doubleValue();
+            if (damageReduction <= 0) {
+                damageReduction = 0;
             }
             double finalDamage = e.getFinalDamage()-e.getDamage(EntityDamageEvent.DamageModifier.BLOCKING);
-            e.setDamage(EntityDamageEvent.DamageModifier.BLOCKING, finalDamage >= damageReducation ? -damageReducation : -finalDamage);
+            e.setDamage(EntityDamageEvent.DamageModifier.BLOCKING, finalDamage >= damageReduction ? -damageReduction : -finalDamage);
             e.getEntity().playEffect(EntityEffect.HURT);
             if (ConfigManager.getBoolean("Combat.disable-shield-cooldown")) {
                 Bukkit.getScheduler().runTask(OldPvP.getInstance(), () -> ((Player)e.getEntity()).setCooldown(Material.SHIELD, 0));
