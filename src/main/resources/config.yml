@@ -1,7 +1,7 @@
 Combat:
   disable-attack-speed: true #攻撃速度を無効にするかどうか
   sword-blocking: true #剣で防御可能にするかどうか
-  shield-damage-reducation: 0.5 #盾のダメージ軽減率(1で100%)
+  shield-damage-reduction: 0.5 #盾のダメージ軽減率(1で100%)
   disable-shield-cooldown: true #盾のクールダウンをなくすかどうか
   disable-shield-block-sound: true #盾で攻撃を防いだ時の音を無効にするかどうか
   disable-shield-break-sound: true #盾が壊れたときの音を無効にするかどうか

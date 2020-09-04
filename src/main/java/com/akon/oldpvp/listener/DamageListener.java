@@ -19,7 +19,7 @@ public class DamageListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDamage(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamage(EntityDamageEvent.DamageModifier.BLOCKING) < 0) {
-            double damageReduction = e.getDamage()*ConfigManager.getNumber("Combat.shield-damage-reducation").doubleValue();
+            double damageReduction = e.getDamage()*ConfigManager.getNumber("Combat.shield-damage-reduction").doubleValue();
             if (damageReduction <= 0) {
                 damageReduction = 0;
             }
